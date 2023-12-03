@@ -54,7 +54,7 @@ class BlockChain {
         return this.chain[this.chain.length - 1];
     }
 
-    minePendingTransaction(miningRewaredAddress) {
+    minePendingTransactions(miningRewaredAddress) {
         let block = new Block(Date.now(), this.pendingTransactions);
         block.mineBlock(this.difficulty);
 
