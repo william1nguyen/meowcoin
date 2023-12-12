@@ -1,4 +1,4 @@
- const SHA256 = require('crypto-js/sha256');
+const SHA256 = require('crypto-js/sha256');
 
 class Transaction {
     constructor(fromAddress, toAddress, amount) {
@@ -55,16 +55,18 @@ class BlockChain {
     }
 
     minePendingTransactions(miningRewaredAddress) {
+        // receive reward
+        const rewardTx = new Transaction(null, miningRewaredAddress, this.miningReward);
+        this.pendingTransactions.push(rewardTx);
+
+        // mining blocks
         let block = new Block(Date.now(), this.pendingTransactions);
         block.mineBlock(this.difficulty);
 
         console.log("This block is mined!...");
         this.chain.push(block);
 
-        // receive reward
-        this.pendingTransactions = [
-            new Transaction(null, miningRewaredAddress, this.miningReward)
-        ];
+        this.pendingTransactions = []
     }
 
     createTransaction(transaction) {
